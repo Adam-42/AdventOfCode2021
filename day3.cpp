@@ -132,9 +132,9 @@ static int64_t Task2(const uint16_t data[], size_t length, int bitCount)
 	const uint16_t topBit  = 1 << (bitCount - 1);
 	const uint16_t bitMask = (1 << bitCount) - 1;
 
-	std::vector<bool> valuesToDiscardOG;
+	std::vector<bool> valuesToDiscardO2;
 	std::vector<bool> valuesToDiscardCO2;
-	valuesToDiscardOG.resize(length);
+	valuesToDiscardO2.resize(length);
 	valuesToDiscardCO2.resize(length);
 
 	size_t numDiscardedO2  = 0;
@@ -151,7 +151,7 @@ static int64_t Task2(const uint16_t data[], size_t length, int bitCount)
 		int bitCountCO2 = 0;
 		for (size_t i = 0; i < length; i++)
 		{
-			if (!valuesToDiscardOG[i])
+			if (!valuesToDiscardO2[i])
 			{
 				bitCountO2 += (data[i] & (topBit >> bit)) != 0;
 			}
@@ -171,9 +171,9 @@ static int64_t Task2(const uint16_t data[], size_t length, int bitCount)
 			int bitSet = (data[i] & (topBit >> bit)) != 0;
 			if (bitSet != bitToKeepOG)
 			{
-				if (!valuesToDiscardOG[i])
+				if (!valuesToDiscardO2[i])
 				{
-					valuesToDiscardOG[i] = true;
+					valuesToDiscardO2[i] = true;
 					numDiscardedO2++;
 				}
 			}
@@ -192,7 +192,7 @@ static int64_t Task2(const uint16_t data[], size_t length, int bitCount)
 		{
 			for (int j = 0; j < length; j++)
 			{
-				if (!valuesToDiscardOG[j])
+				if (!valuesToDiscardO2[j])
 				{
 					oxygenGeneratorRating = data[j];
 					break;
