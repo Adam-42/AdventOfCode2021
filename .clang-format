@@ -31,5 +31,8 @@ SpacesInAngles                            : false
 SpacesInSquareBrackets                    : false
 TabWidth                                  : 4
 UseTab                                    : Always
+
+# https://stackoverflow.com/questions/32970045/how-to-prevent-clang-format-to-add-space-after-comment-char
+CommentPragmas                            : '^[^ ]'
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
