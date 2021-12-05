@@ -26,20 +26,14 @@ extern void Day23();
 extern void Day24();
 extern void Day25();
 
+#define DAY(x) std::cout << "Day" #x "\n----\n"; Day##x();
+
 int main(int argc, char** argv)
 {
-	std::cout << "Day1\n----\n";
-	Day1();
-
-	std::cout << "Day2\n----\n";
-	Day2();
-
-	std::cout << "Day3\n----\n";
-	Day3();
-
-	std::cout << "Day4\n----\n";
-	Day4();
-
-	std::cout << "Day5\n----\n";
-	Day5();
+	DAY(1);
+	DAY(2);
+	DAY(3);
+	DAY(4);
+	DAY(5);
+	DAY(6);
 }
