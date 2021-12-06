@@ -59,13 +59,13 @@ static int64_t Task(const uint8_t data[], size_t length, int days)
 
 void Day6()
 {
-	constexpr const char *resultName = "lanternfish count";
+	constexpr const char *resultName = "lanternfish count wil be ";
 
-	//std::cout << "From test1, " << resultName << " was " << Task(g_dataTest, std::size(g_dataTest), 80) << "\n ";
+	//std::cout << "From test1, " << resultName << Task(g_dataTest, std::size(g_dataTest), 80) << "\n";
 
-	std::cout << "From task1, " << resultName << " was " << Task(g_data1, std::size(g_data1), 80) << "\n ";
+	std::cout << "From task1, " << resultName << Task(g_data1, std::size(g_data1), 80) << "\n";
 
-	//std::cout << "From test2, " << resultName << " was " << Task(g_dataTest, std::size(g_dataTest), 256) << "\n ";
+	//std::cout << "From test2, " << resultName << Task(g_dataTest, std::size(g_dataTest), 256) << "\n";
 
-	std::cout << "From task2, " << resultName << " was " << Task(g_data1, std::size(g_data1), 256) << "\n ";
+	std::cout << "From task2, " << resultName << Task(g_data1, std::size(g_data1), 256) << "\n";
 }
