@@ -37,4 +37,5 @@ int main(int argc, char** argv)
 	DAY(5);
 	DAY(6);
 	DAY(7);
+	DAY(8);
 }

@@ -105,15 +105,15 @@ static int64_t Task2(const int data[], size_t length)
 	return minFuelQuantity;
 }
 
-void Day7()
+void Day8()
 {
-	constexpr const char *resultName = " best fuel usage is ";
+	constexpr const char *resultName = " day 8 result is ";
 
 	//std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
 
-	std::cout << "From task1, " << resultName << Task1(g_data1, std::size(g_data1)) << "\n";
+	//std::cout << "From task1, " << resultName << Task1(g_data1, std::size(g_data1)) << "\n";
 
 	//std::cout << "From test2, " << resultName << Task2(g_dataTest, std::size(g_dataTest)) << "\n";
 
-	std::cout << "From task2, " << resultName << Task2(g_data1, std::size(g_data1)) << "\n";
+	//std::cout << "From task2, " << resultName << Task2(g_data1, std::size(g_data1)) << "\n";
 }
