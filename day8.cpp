@@ -5,115 +5,489 @@
 #include <numeric>
 #include <vector>
 
-constexpr int g_data1[] = {
-	1101, 1,	29,	  67,	1102, 0,	1,	  65,	1008, 65,	35,	  66,	1005, 66,	28,	  1,	67,	  65,	20,	  4,	0,	  1001, 65,	  1,	65,	  1106, 0,	  8,	99,	  35,	67,	  101,
-	99,	  105,	32,	  110,	39,	  101,	115,  116,	32,	  112,	97,	  115,	32,	  117,	110,  101,	32,	  105,	110,  116,	99,	  111,	100,  101,	32,	  112,	114,  111,	103,  114,	97,	  109,
-	10,	  14,	94,	  153,	512,  1778, 1219, 522,	207,  112,	148,  1185, 380,  530,	502,  957,	898,  71,	10,	  719,	47,	  51,	188,  188,	1277, 446,	156,  188,	990,  370,	549,  1086,
-	49,	  150,	42,	  50,	976,  456,	24,	  526,	183,  206,	887,  3,	487,  11,	111,  933,	1059, 51,	439,  30,	258,  901,	19,	  1207, 718,  404,	498,  79,	83,	  58,	520,  267,
-	109,  933,	4,	  174,	748,  66,	463,  514,	378,  708,	103,  1073, 364,  224,	254,  28,	196,  95,	30,	  567,	633,  943,	3,	  63,	1369, 1754, 342,  651,	139,  8,	10,	  535,
-	1,	  841,	89,	  306,	86,	  621,	51,	  872,	806,  212,	926,  930,	390,  665,	163,  291,	357,  724,	861,  106,	793,  222,	33,	  215,	81,	  1100, 641,  813,	1073, 276,	1416, 991,
-	318,  505,	1112, 1556, 1309, 1222, 504,  72,	126,  1143, 261,  347,	1022, 668,	146,  111,	982,  250,	247,  589,	42,	  99,	305,  722,	1286, 732,	16,	  248,	234,  140,	492,  1229,
-	342,  204,	113,  137,	597,  44,	78,	  484,	285,  431,	502,  258,	1329, 1143, 364,  814,	0,	  489,	1070, 837,	56,	  17,	784,  636,	809,  342,	50,	  713,	71,	  280,	674,  1586,
-	321,  255,	143,  47,	184,  62,	1133, 4,	24,	  470,	5,	  269,	11,	  316,	2,	  472,	535,  1011, 854,  1543, 614,  605,	404,  1010, 757,  129,	91,	  889,	10,	  30,	429,  625,
-	816,  107,	1367, 69,	272,  466,	335,  851,	723,  574,	121,  37,	23,	  256,	920,  4,	1280, 405,	731,  249,	930,  135,	306,  448,	1027, 27,	932,  4,	352,  703,	258,  652,
-	1121, 89,	478,  189,	75,	  1204, 33,	  869,	1483, 191,	64,	  136,	1622, 651,	294,  458,	944,  819,	68,	  1635, 29,	  301,	591,  1195, 82,	  783,	1411, 841,	96,	  1370, 272,  403,
-	10,	  87,	1233, 71,	108,  430,	992,  19,	258,  171,	1812, 509,	671,  212,	228,  252,	22,	  1477, 344,  359,	639,  351,	1187, 44,	300,  318,	92,	  189,	153,  1141, 606,  679,
-	710,  148,	62,	  335,	138,  1074, 1131, 658,	533,  356,	462,  434,	759,  1036, 436,  4,	1031, 387,	80,	  223,	1152, 125,	515,  32,	243,  239,	31,	  1277, 1151, 252,	565,  12,
-	700,  117,	90,	  83,	194,  22,	196,  73,	460,  560,	133,  351,	237,  167,	21,	  694,	9,	  287,	114,  128,	130,  190,	1271, 382,	652,  834,	261,  907,	1697, 377,	854,  241,
-	1019, 959,	945,  1397, 1095, 1009, 1337, 647,	631,  1019, 83,	  1691, 540,  544,	648,  685,	133,  64,	283,  1599, 55,	  10,	37,	  25,	614,  93,	98,	  503,	7,	  200,	376,  64,
-	636,  471,	110,  491,	402,  795,	388,  1453, 713,  717,	122,  680,	297,  942,	117,  88,	1467, 123,	1056, 1295, 1100, 1343, 956,  133,	6,	  498,	1687, 35,	959,  380,	97,	  2,
-	351,  1556, 749,  246,	700,  157,	1216, 571,	448,  730,	1515, 47,	535,  102,	1550, 486,	551,  387,	0,	  430,	434,  205,	351,  701,	421,  536,	308,  247,	88,	  25,	329,  264,
-	464,  1441, 77,	  18,	1712, 353,	1672, 56,	220,  328,	74,	  973,	249,  489,	815,  589,	607,  927,	158,  63,	13,	  49,	573,  280,	350,  66,	553,  233,	69,	  314,	78,	  961,
-	469,  821,	605,  959,	48,	  1346, 968,  222,	1365, 473,	917,  137,	782,  322,	603,  989,	277,  45,	73,	  265,	276,  242,	342,  257,	699,  221,	334,  259,	806,  812,	54,	  89,
-	1551, 109,	271,  1642, 151,  1158, 228,  109,	10,	  306,	1308, 817,	1618, 1430, 839,  146,	33,	  650,	241,  83,	644,  109,	120,  637,	317,  190,	48,	  1113, 1547, 68,	765,  230,
-	422,  1066, 421,  22,	189,  1060, 375,  907,	363,  1051, 34,	  465,	572,  611,	629,  535,	1097, 1015, 915,  616,	13,	  448,	36,	  29,	129,  195,	1423, 839,	56,	  125,	430,  571,
-	747,  449,	435,  446,	387,  569,	22,	  1721, 90,	  978,	1659, 93,	1826, 115,	334,  219,	333,  122,	725,  162,	707,  17,	1103, 38,	172,  65,	438,  1143, 763,  115,	328,  13,
-	257,  117,	383,  912,	673,  130,	128,  222,	318,  785,	1505, 887,	110,  1706, 786,  192,	524,  1265, 40,	  276,	408,  63,	86,	  315,	648,  222,	17,	  1127, 460,  341,	414,  204,
-	991,  14,	68,	  354,	201,  110,	1613, 477,	345,  1991, 452,  5,	446,  68,	456,  683,	144,  336,	149,  1204, 736,  934,	1256, 112,	26,	  478,	185,  1361, 997,  220,	292,  52,
-	385,  130,	107,  61,	39,	  368,	757,  466,	120,  787,	576,  355,	701,  52,	212,  448,	103,  712,	679,  94,	465,  788,	93,	  884,	29,	  214,	470,  120,	216,  406,	662,  642,
-	452,  704,	156,  484,	29,	  41,	1639, 286,	1325, 535,	101,  53,	408,  1727, 684,  276,	314,  36,	1393, 1448, 34,	  12,	158,  118,	433,  1320, 617,  68,	395,  174,	83,	  549,
-	1032, 871,	239,  325,	454,  923,	1324, 470,	532,  214,	1308, 278,	213,  155,	94,	  514,	18,	  1278, 467,  481,	194,  932,	122,  619,	796,  1296, 979,  884,	1176, 230,	457,  61,
-	162,  571,	1246, 631,	840,  135,	76,	  293,	517,  789,	314,  772,	674,  406,	1302, 9,	86,	  53,	1019, 376,	1688, 203,	1328, 840,	322,  17,	249,  1192, 5,	  353,	304,  476,
-	739,  299,	1495, 162,	49,	  226,	421,  19,	20,	  1179, 4,	  438,	244,  298,	117,  46,	107,  133,	407,  190,	146,  1063, 485,  132,	348,  15,	804,  343,	227,  1108, 29,	  1141,
-	1413, 1412, 181,  489,	146,  227,	1136, 86,	612,  1256, 862,  120,	3,	  129,	373,  1240, 428,  1119, 13,	  168,	34,	  609,	655,  260,	94,	  634,	1136, 1567, 165,  0,	1079, 11,
-	39,	  27,	456,  391,	79,	  1908, 1062, 141,	6,	  1081, 209,  642,	1726, 83,	141,  2,	254,  393,	83,	  246,	1355, 1085, 786,  453,	213,  1536, 756,  351,	405,  1925, 3,	  1,
-	12,	  615,	303,  423,	10,	  1365, 181,  1510};
+constexpr const char *g_data1[] = {
+	"aecgdbf badcg fbcage gdabce be gaedb bced dfeag adbfgc abe | gedbacf be bdfcga bedfgca",
+	"gbeda bf fbgea dgafce fcgedb fgaec bcfa bfg baefgc dbfgace | fb cfba cbedfg afbc",
+	"dfegb bcfdae cagbef cedfg cde cadg fcagde dbcefag dc geacf | dc aedcfb ebadgfc cgdef",
+	"fgecab ebfd ed acgbd bgadfe dge dbage daefcg gfeba ecdbafg | dfbe fbaeg abegd caefdgb",
+	"edbg gd ebfcg cafed dfgecb gdf agcbfde dgfcab fegdc gfbaec | dbge fbaedcg gd dg",
+	"fdbagc egbdf dga ebcfad caedgf eadcf dafeg dagfecb gaec ga | fadebc edgaf ga eagc",
+	"ed gefacb dfacge fedb cde ecgdfab cgbfe ecdbg edfbgc dbagc | defb edfb ebgadfc efgcb",
+	"afgbec adfecg ebfacgd gbfc fb ecdba aebfc debgaf fba gfcea | gadfbe gefdabc dbeac fb",
+	"def degfba egfbd ef cabdge gbdfc adbeg eafbdc geaf edacgfb | bfdgae fde fde geadb",
+	"fbdcg edafcb dgabef cfedb eadbf ced gcbedfa beca acfgde ce | fcaged eacb bgeadf dbacef",
+	"bgcaf fgabd ebfgc cfa dagfce cgefbad gfcbea ca fdbgce aebc | aebc edgcbaf adfgb gbfad",
+	"ebgad ea dbfeg bceagdf dgcba aebc edgabc cafdeg abfgdc aeg | dgcba ae ceadgf gbedf",
+	"bcdeg gfedab cf cfg aefc fcbdega ebfag cbgadf gbfec acbfge | fc cgf gcf fc",
+	"dg adcebg bcdafe dbgf gda bfade adfgbe afedg adefcgb geafc | cgaef dg caegf gfdecab",
+	"dgace afbegd bcgdeaf cdgfea ca cdegb cfga egdaf eacfbd cea | eca cfga gafde ca",
+	"cfgeab gdfeabc fcbeg fdegba ae ega gcbea dagbc fcgbed feca | degbfca bdfgeca gcbaef caef",
+	"cbgfa dfbcg gdb dg fdgbea edcg cfgbde cfdbe cdafbge bdeafc | dg dgb gfdeab bdg",
+	"fb bedgfc cbf fegadcb dfacbe bfceg fbgd gdfce dfgaec geabc | adbfce gafcdeb bcf bf",
+	"cegfd edagc fadgebc abfegc cf gdefbc aefbgd gedbf gfc cfdb | dcgbfe cdbf fbdc fc",
+	"ebcag adbefc defgca fdga gefdacb egfcdb afcge fg gcf edcfa | cgfdbe adefbcg bcfadeg beacg",
+	"cebfa begfca efb fe ecbgad bgaec fgecbd fdcgabe gefa dabfc | ef ecabdg egbfcd cgbea",
+	"gdae dgebf acgebf dafcgb dg efbgda gfbeacd fdg cbdef efabg | bfcde dg gfdbace dfg",
+	"gfcdb fbecad abdce fcdbe dgfeab efca dfe bcadeg ef degbfca | dgabce fdgbc fgdcbae bcgdf",
+	"becf ecdafb aefgd gbdcaf cdebafg cdf acbed cafed fc debagc | abdfgc gcbfad cagdeb fc",
+	"fabdc fcegdab be deb defbca fbacdg bfade gfcebd beca gdeaf | ebca be bcagdf gcefbd",
+	"dacbge cbdae gfaeb gacfbd baged acdebf bdg ecgd gd acfdebg | gd dgb edfbgac dg",
+	"bdfecg fgeac agdeb fadb bgeaf bgdfae bgcedaf fb cbadeg gbf | bfeag cabefgd baged fb",
+	"ecga cef becdfg bgcdeaf fcdage fedac cdabfg dfagc dbefa ec | ce cdgfbe fec cfbadg",
+	"ecbf agbcf beagc dagcf cafgeb bfg dgfbcae egbacd bf adgfeb | fgb fgb cbegfa befc",
+	"bdcaefg fdb bdefa edbca cgaedf gefb adfeg fb fcgbad edbafg | fdb bf ebdaf fbeadcg",
+	"cba ecgfa bdgc gfabcd bc abfedcg abgfd fabcg bedafc gbfead | cab bc bcgd dgcb",
+	"fbeadgc fdacbe abde dagfce cfbag efcda gdefbc bec be feabc | dabe be ecb cefagdb",
+	"af eaf debga bcedf ecgfbda acfegb adcf bfgecd ceafdb badef | dfac af fa bfdeac",
+	"cdaeg fedcag edfcg fgacedb gadbcf acd egacb dgfceb daef da | begca ad efacgdb cad",
+	"cefdg adbg ecbfag cbeafdg geafb bgedf dbf ebcadf fgdeba bd | gedbf cgdaefb dfb gdcef",
+	"cdfeg gecafbd bdfea bgfadc gbfaed fcead cdfbae fca ecab ca | fcbgda bcae ecab acf",
+	"abdcef gbacdfe fdabc fedac cfbe fde bdagfc eadcg ef edgbaf | efcb adfec fed bcedfa",
+	"fcadg efbgc bdf afcdegb bd cfdagb cdgbf bcda gdebfa deafcg | fbcgd agcfdb cgfad db",
+	"efg gbdce cgedaf bdfe acbegd egfcdb gbfec ef fdcgbae fbacg | bcdfeg fcgba egf gebcd",
+	"cabedf cgfed fdgeb baeg gadfb eb cgafbed edagbf fbe acbgfd | dbfacge edgfabc eb eb",
+	"gfecad gebdf egb bdcfe gb gadb ecfgbda egdfa defgab cfabeg | cegafd gafcbde adbg egb",
+	"cefbg ceb ce egbdf cagfb bgfedc gcde bdfgae bfdcae gdbfeca | ce gbcefad edgc ce",
+	"bacdg cbge ec fdega cafgbd gbecda cea bcdfae fabegdc cedag | eafdcbg cegadb fgdcab eca",
+	"gfcadb dfbe dfg egadf gbfaed agbed df dgeacb agefc dfgcabe | fd dbfe dgf bedf",
+	"efabg gbcfe bcaefd gc gec gcdb efdbc gfdcae ecgbfd cedbafg | cgfeb cdbfae fdaegbc ecg",
+	"dcfgae dcbgfa gfe fgcad afdeg fdbea ge cgdebaf fgcdbe geac | cdgabf dcgabf edfbcg fdebgc",
+	"efdacg dbgef defcbg be abgcde dbe cfdge gabfd dafbceg cfeb | fdgbace fdbga bgaedcf dcfeg",
+	"cfedgba agdbc gfdcab fg fgab fagdc dfcea becgfd adcebg fgd | fg eafdc gdbacf cadbgf",
+	"dgecbf agedfc af dcbae becgfda dbafe bfgdea fbegd gbaf fea | af ebfdg af abefd",
+	"afebgd ecbafdg bge bg gcdfe bcdg adcfge ebgcf acefb bedgcf | fecdag fcaeb beg bg",
+	"bfgdec de efgca cedabf agcbdf gedb dec gbdcf afbgdec gecdf | dcgfb cde fegca ed",
+	"fegcb ecd egda gcbda fadbec edgcafb adgbcf ed gdbec egabcd | cabedfg fgdebac de egad",
+	"efcbg cafeb dcafbe ebag gbf bg dgefc ebdafgc bfeacg dbcafg | bg fgecd bfg efgcd",
+	"cfbg aedfcb bg gdb ecbdg dbfec adcge aebgdf agcbdfe edbcgf | gbd cegbdf fegdbc gcedb",
+	"fcbgae bdacef aedfg gdcafbe fdebc cbda fdaeb ab eab gbdefc | ab dacb agefd gcbefa",
+	"gdcfb dfgceb eb feb cfaebg faced fcedgab cbedf gbde fbgacd | feb baecgfd eb eb",
+	"fbdaegc efcb bdgaef fbgcde dfc bfedg cbgfd egacdf abgdc fc | dgcba cgdfb bgacd gcafbed",
+	"aegfbc gfdbac abfec efb fceg dfbcage bcdae fe eafdbg bafcg | gfedab fe bcfdga ef",
+	"fcdbag ecgfabd dgaecb dgcae ed cebd deg egbfda gefac gbacd | de caedg aegbfdc bdcfaeg",
+	"adfbc eba bedcga becda efcagdb egad gcdebf cgafbe ea dbegc | efcgdba dage bcgdafe ae",
+	"fbgace gafdc adge cfdegab bfedcg fgeacd gd dgf eacfg fcbda | dgcaf bdafc gacef dg",
+	"gdecf dge bdcgf fdbgea ebdgfca gfacde cead gecfab de cegfa | edg ed ceda ed",
+	"cbedf cbeafg edfagb adec bfade cbgdf ce fdecba ecbdagf fce | cbfed fec aced eacd",
+	"gebac ebdcagf facbdg abcgfe fbc bfgde ceaf cgbeda fc bcfeg | bcf bcf fc bfc",
+	"facgeb cgfade abc abcdf ceagdfb edbcf ab cdagf abdg bgcdfa | afgdc ba gebfcad dbag",
+	"fbadgc defac ga egafd ebdfgca dfecba aegc adfgec defgb gda | ag gaec gdafcb dga",
+	"face cag gdafeb dbagce agecbf gbdcf gbcaf fbeadcg egfab ca | cga ca becfga efac",
+	"bcgdfa bdgca cgebad fcgb fbedac dgafb dfb faged gbadfec fb | dfbag gdfba fbcg dbf",
+	"decabg be gdafebc edgfb ecbdfg ecagfd gcedf dbafg geb cebf | fgebcd dcgebaf gcbdea bfec",
+	"dfaecg gdbea cbd bedcfa gcfbde cbfg dfgaceb gdcfe edgbc bc | bc gcbf edgba bc",
+	"bgeafc gedfbac dceaf bged fdgbce cgdfb ebc bfecd fcagbd be | cfgbea bec dcgafb adbfgce",
+	"fde fcea dgefca dfcag abged ef eadfg cdfgeb fgbacd dcefbag | gdacfe cfea fdcbega cagfbd",
+	"gefdca eb bgdfa adegbc edgcf cfabdeg gfdeb bge befc gedfbc | eb fgdecb dbaegc eb",
+	"bgadcf aefgb gecdba dcef fgc aegdc cf cafge agdcfe agcfdbe | cf fdcabge fc cgf",
+	"dfegb fg fadbe gcdefba baefgd cegdaf dcabfe gcedb gef agbf | fabg gabf aefgdb fg",
+	"eadfc defcb fdabcg dabceg gceadf ea eac eagf gbacdfe dgcfa | cae faecbdg ebgdfac eca",
+	"adcbgf badfce cfd fdega beafdcg cf caegbd bcgda gdcaf gbfc | cf cfgadb efcbda fabdegc",
+	"gcd ecdfb abfcde fgdab bcgfaed gc afedgc gbdcf egdcbf ebcg | cdfbge bcedfg gceb gc",
+	"eadbgf cfgbe bdagf decgfa bdac ca bfagc afbcdg cag acfegbd | ca cag edcgaf abdfgec",
+	"gcfbea cbeadgf bdcg cd decbga abdce cabge adbfe adgecf cde | gbfeadc cbgd fcedga cbega",
+	"fc decf abecgf cdeafg adcfg acdbge agbfd decag cgfeadb cfa | cfa cf bgadf eacgd",
+	"bgafe ae afecbg gcaedb bae cfae ebfcgd cgabfed gbadf egbfc | acef egfab bae befgdc",
+	"afcdbg aegbd gdbace baecd gd ecgdfab dgb ecgd aebgf baedfc | efdbcag egcd efdacb gbaef",
+	"afcgbe gdbc agfde cbdega dc dgbeacf dce afebcd acegd baceg | aecgd cde cdgb dgbc",
+	"fabed egab cfgdea fae bafdgc cfbde ae bgdfa gbacfed gedafb | efbad dafeb eaf fagdcbe",
+	"dbca agebd gbdcea ebfcadg fgabe bdgcfe eagcdf da gad bgecd | abdc gfbaced gafedc gbfae",
+	"cgadb ecfadb agb bdgf dbfac bg dcgea dcgeabf fabegc bfdcga | dgfb gb cbagd gab",
+	"bcadf efad ef gebcafd ebf bgedc bfcgad becfd ebfagc cdbefa | cbafd ebf faed dcfab",
+	"aegfb gabedcf fbg bf ecfb dbfgca adcgfe afbecg beagd egfac | becf decfga gfb gcafedb",
+	"gedbc adgcb da adg feabdg gdaefcb fcad bcagef gbafc gbadcf | dgcebfa da bdgce fgabc",
+	"cdgfeab fdeca bcafde cg dgc abdecg fadcg egcf afdbg ceafdg | dgc gdc ecabdfg fdaceg",
+	"gdbefa gfacbd dgacfe abcge eacfg dcfe egf gfcad fe gaefbcd | ef edcf egcdfa efgadcb",
+	"gacd fabed caebg cdbafeg cd ceabd gbdcae edc dgbefc abcgfe | dec cgda dc cde",
+	"bgae agedcb caged dfcaegb gcb dcbag dfaceg cfdab fecdgb bg | abcgd ageb adgcfbe beag",
+	"cdbgf dfbagc cfd cegbd bfdag agbefd gcfa fc fbecda fedcabg | gcfdba cfag aegcdbf gfac",
+	"gedca efab gcdfab bdeca ecdbagf ab befdc bad abecdf efgcdb | faecgdb ab egacd acged",
+	"eaf agebf abfcg edga debfag ae befgd dabfecg dfebca edfgbc | ea aef agde ecdfabg",
+	"gdceab dcafgeb ecfgda ef fdbag fbdge fge edgcfb edbcg bcef | gef cdbgfe bedcfg ebcf",
+	"cdgbfa fgbec gbdefc acef ebagd ac acbdegf bca ecgba ecbgfa | bcgafd gafecb ca ca",
+	"bdaecg cfbg bgdef cfead feabgd gce gc bcdfgea egfcd efcbgd | dceagb befgdc gc cg",
+	"dfaecb gbfde gefad gbae bfegdc cafgd ae fae gcfaedb bdagfe | ea gfdaeb bfadeg bfecdga",
+	"efa geadf fa bcgafe cagedf dcaf badge cebgdf fcgde fbdaegc | fea afgedc fa cgfde",
+	"cebdga de baedgfc cdagfb ecdfg ebgfdc cdgbf dec efbd efcag | egacf bgcdf ed eacfgbd",
+	"edac gaebdf afdeg agedbcf acdfge ec fce egfac cebdfg afgbc | fbegcad ce gfcab cdfage",
+	"dfaeb edfgb ebg debcgf fedcg gebacd facgde fbgc cadbgfe gb | bfdge gbcf cdgbef fbgc",
+	"gc ecgfbd bagfd fgabc gcda gedbfac aefbc bfcagd fadegb gcb | efabc cgda deagfcb gbfedc",
+	"gbdea cgefadb gacd ged aebdf gd cgeab eacgbf fbecdg dbacge | dfgbeac dgca faebgcd cbdeag",
+	"fdabc bgecf dgab fbaegcd gadbcf fagced cfdabe gaf ga facbg | fdeabc gfbadc gaf cgdbeaf",
+	"cbagde cbdefg ad afegb eagdfc fegad dgfce acgebfd dafc agd | fcad eagdbc gda efgda",
+	"egcfa adgbe cdfega cebgadf gebcfd bc begac bafc ecb abgfce | ceb egbdcaf edfbcg bafc",
+	"dfg gcad dg dcagfbe baefd fdgeac fegac dfbgec cfebag afged | ceafg agcd gadef ecdgbf",
+	"eag ea agedbc gafced bcea abgcdef edagb bacgfd dgbac bfegd | acdbeg fagedc aecb abce",
+	"eacgf defgcb dfc fagdebc ecgabf fd dcgefa edaf dcgaf bdcag | cegaf cgdaf eadf bcgedf",
+	"ecbda ebdf bf cfb fgbcad abedfc abegdc gfeca fbaec dbacefg | fcb egdbac badcge dceba",
+	"eagcdfb cfgea cebd cgfdba cbgae eab acbdg eb bceagd gbfeda | abgdce agefdb edfbag fagdbc",
+	"decfb gecbafd gefabd gebda efgacd gf egabcd begfd fdg bfga | fg cegabd efbdcga gf",
+	"gfce fed febcd ef gacfbd debac adcfebg fdabge gcedbf gbcfd | ef cgbfad fed eabcd",
+	"fda gedbf edgca af ceafdb efgda agedcb acgf bgdceaf acedgf | fda fbdace cgfa debfg",
+	"gdebca dgcab acgf cf bfdacg fdbegc bfc efbda bgcdafe dafbc | gcebdf cf fcb gebcdf",
+	"ecgfdb dbae fagdce fbeag ea afgdceb bfaedg fea bedfg cfbga | eaf dbgef ea bfaegdc",
+	"daegfc dfebc cgebf cbaefd dcf ecgdfba dc gadbef aebdf adbc | gedfba gcdabef abedfc dc",
+	"edfbag cdeabf decafbg acfgb ac fbcaeg acf gaec fegba cbfdg | cega dbfagec ebgafd cgae",
+	"fgabde ecagf fcdae agfbcd ge abfgc gcbe gea dfegcba ebcagf | cfaegdb gebc acfed ge",
+	"dgaebc cgb fgbedac debcaf gc dgfc gcbadf afdcb fegab fbacg | gbecda cbfadge gbc fbcdae",
+	"egdbc gbcaedf bcf afbg ebfgc bf bagcfe gecadf cefag dafbec | gbcfe dbaecf decfgab fb",
+	"befgd caef fgc fdeagc ecgda dcbfag fc acebdg dfceg cgfebda | fc eagdc cf cafe",
+	"cgabf acegdf gbadec deaf dcage cfaeg cbgfade egf ef decfgb | cgefdb decabg adceg cgedab",
+	"bdce gdfce cbgafd cbdfge facdbeg fce bfaegc fgbdc ce gfeda | agdef ebgfcd fbdcg dfegc",
+	"gca bage ga fcedg fbcedga cagbfe cfbae cfbadg facdeb egacf | agbcdef agc gca ga",
+	"efgab ce adec ebagcd abdgc abgec bfacgd gbefdc efdacbg ebc | ec egacbdf agfebdc beagf",
+	"be fcdeag gcebad adcbe ebcfagd eba ecbg dcfba adegc edgafb | ebgdaf ebgc dgcfea cebadg",
+	"febgad geda dagecfb abdfe fbcga dbgaf efgcbd dg dgf cdfabe | gaed adge gdae gaed",
+	"fe gbcdaf cfdgae begdf agdbf bdgec bfegad fabgdce bfae gef | gfadbe beaf agfdec egf",
+	"gcbef cegabd cgebdf dbcge abgfe cf cdfb fgc gbcdefa agfdec | gcf fgc bedgac dbcf",
+	"fcbed dfgeab becdagf egabf fac gafcdb ca cega becfa fceagb | cdbfag cfa bfagcd cfedb",
+	"efabgd bgfea ebacdfg afb cfebgd ebdfg af agceb dafceb fagd | fa fbdage afb dafgeb",
+	"agb ba fedbgc geabcd fgead fcab fadgceb afbdg cdbfag cdgbf | abcdge ab ab agedcb",
+	"bfega feadbg fgbc cgfeabd cfa abcfe afcebg acdeb cf cfaedg | fgbc fac acf dgafce",
+	"egfba fdbeag fda ebdf agbfd fd ecfadg bgcfea bacdg fgeabdc | faebgd gfeba eabgf fadgb",
+	"decgbfa dcfbag bgf abdg bg ebgfca gfedc bafcd fabcde gbcfd | gb fgecd dgecf gbf",
+	"gcbaef cfgead fb acdbfeg acbf gcfea gebcf ebgcd degabf fgb | gaedfbc bf cgefa cbgfead",
+	"gfc abcfged edgbfc egafcb fc dbgefa acfb gbeaf aefgc ecagd | fc bgeaf gcf cfba",
+	"ecadfb cegbf cedbf egb edbagfc gbfdea gb feagc bdgc dgfbec | bcfed efcbg gb bg",
+	"gbfa fa dcbegf dagce bgdface dcafg bdfcg cfa bdgacf fdecab | fgbcda bedcfg cfa gafebdc",
+	"afbd gcdeb agecdf dafbeg ebfga cfgaeb fed dbgfe bafgecd fd | df afdb edf gcbed",
+	"fgcedb cbg bcfgead agdb dbaegc gcaeb aedcg bg ecbfa fgdeac | bg acgbe bg gb",
+	"dgacf bf fbd afbcd afgb dbafcg ebafdgc fadgec dfegcb cdeba | bdf fgab fbd bfga",
+	"daecg dabecgf edfagb fcagd cadbgf dabfec bfgc gbadf dcf fc | bafedcg afgcd cdage dcafg",
+	"cgafbd beadgc fagbc afb bf gbdca gafce fbdg fgdceba efdbca | cfgbad fab abf bfa",
+	"febgd cfdge fcda gbdacfe fc cagde degfac cbedga fabceg fce | ecf befdg cdefg fc",
+	"dcaf agecdb dgfbcea cgeadf faegb gecda dgafe fd bedcgf dfg | daegc bcdeag cfad fdgea",
+	"dbgea acdeb ecabdg fadce begafc abc dbgc defagcb cb fabged | agdbcfe cagbef dacgbe deacf",
+	"fdbge ae caedfg ade agbfcd ebca egadcfb dcabf fedcba daefb | aebc caeb dea bdefg",
+	"edab cda fedacb da gbdecf dcgefa fbced acfgb cbafd bacgefd | afegbcd cfebdga ad fgaecd",
+	"afgbd cedga cgabd cb bcdfea fgabdc cfbg gcbdefa fdageb bac | efcdabg bfegda cba abdcfe",
+	"gfdcab ceg adgbc aefcd gedca cebfga ge ebgd gfaebcd degcab | edfgbca eg gebd gdbe",
+	"eafgcb afcbd egbfa dfge fedabg gd fabgd cgbeda dgb aebcdgf | dbg bafeg cegbdaf fdge",
+	"cefdg edbfacg cb fabced dgfba bfcgd cdb dcbagf bfadeg acgb | dfeabg abcg bceafgd cbd",
+	"bac bagcf acge cbdgf cafedb gafecb fbgae agbecfd ca agefdb | cage cfdgbea fgebca bafgc",
+	"bgeacd cbd dgcfeb db bfeac aefdgc fbcedga cfdeb gbdf efgdc | befca dcfeb gedafbc dbc",
+	"dbcaefg fadec abfdge gcde ecf ceagbf efadg ec acfdge cfabd | febdag fdage acdefgb cef",
+	"badgfc fad eafbc fbdcge fbdge dgae eadbf abedgfc da fbdgea | edbgf gbfcde baecf dfgbce",
+	"ce bgefad fecg bedgac dce badcf degafc deagf baegdfc cedfa | ec egfda dce cfeg",
+	"gadcbe afebg edgbfc fcad fgcebad fce cf fedcba faceb beacd | cef acegbd dafc adcegb",
+	"cagfde dbgcaf baecfd gdebcfa dce cbfde de bgefc bcdfa abde | ebdfagc abgcdf adbe cde",
+	"bcaedgf agecb eadgbc egda gbcfed aebcd cdabf ed fgbeca deb | fadcb edcba gcfedab adbegfc",
+	"fcgedba cadegb ecdgbf eabcf ga fabdgc cgbed agb dgae abecg | ebdgc abg ceafb cbfae",
+	"badcg gdafb dacbgf aegbf fcegadb gcdf afd fd adcbeg defcba | df dacbg cfgd agbedc",
+	"bfdc cb gbfad agefbd aegfc gbc agcdbe adfcbg bedcfga cgbaf | bcg dgbaf cb egafdb",
+	"bfea aecdb ebdcaf cfb bf gdcfeba cefdg aedgbc bedcf afcbdg | beagdc fb befa ecdab",
+	"cabd egfadc cd abdfgec decfb bdgeaf cfd fbdae gcfbe ebfdac | afbcged cd bdafec dc",
+	"cgbdafe fdabce cbfgda gb befgca dcagb bfgd acdbf agecd gba | aebgfcd bg dbgac dfgb",
+	"gecdafb fe bfdea gbfda bef fceabg adbec degf agebfd afcdgb | bafedg fged fecgabd bgcafe",
+	"becadf decga ca adc cgadfeb gadfeb deagb gcba decgf gabdce | cad acd egdca adc",
+	"dbaef dagbef cegafb baf gcfbeda fgdb baged efcda bceadg bf | bgdae fb bfcage gdefab",
+	"deagbc bedfg gdafcb dcgafeb cg ecdfab cedbg gcea edabc gcd | ecga gabfcde gcea gc",
+	"bdfacg cbdag ecdga cebdag geab ea eda begcadf ebfadc gcfed | dea dea dabcg fbgadc",
+	"dcga ceafb facbg fgdacb gc fdgecb adgebfc degbaf cgf dbgaf | fcg aefbc gfc dgac",
+	"efacgd gabdfe bagd bdfec begacf afgbe da fad ebafd fbgeadc | eafdb agdbef bagd adbgfe",
+	"acdgbe eb cfbe gfebca fedagbc bge gefab gcdaef agfdb cfgea | bfcagde fgabd befc afebg",
+	"fgedc cfabged bc ebac acbdeg gcedb eabfgd bgc dgabe badcgf | gcb abec efabdcg beca",
+	"ebcfgd cbdgaf dbcga facbegd da dga fcad ebcga bcfdg bgdefa | bcgae gcadb da agd",
+	"gdeba gbc gc abgec befdga dagcbe bdcagf cbfae cegd bfgaecd | cg dageb egcba gc",
+	"cgaeb acgbed cbade abefgcd fdgcba aged edbfc adb da cagfbe | agde aegfbdc da acebd",
+	"deb caefgd eb eacb egdca dgcefba dgabfe gdbce cbaegd fgbcd | ecgad egbcda fgbdc ebd",
+	"aegfbd bdeagfc facg cgebf abfecd edgcb cef fc agefb gbcefa | cgadfeb fce gcfa fbdega",
+	"degafcb cdgbef efdb cbegd fgadce acfgb cfe begcf cdabeg ef | egfacbd bafcg fe caedgf",
+	"cbfeadg fceba bcdegf fb ebf eadcf egcab egfcda fedbac fdba | abecg gaceb fgadebc cadefb",
+	"efacb cb cgbe afdegb agebf abc cdebafg fcbage cafed abfdcg | bc bceg aedcf cdgbeaf",
+	"dabcefg geafb eadg cfedba dgeabf fdgba adf ad fbdcg eabgcf | fgdcb edag bedfca aegbf",
+	"gcdbefa bag dbafg aecfbd ag beafgd cfgbd aegf gabedc aedfb | ga deagbc bagfd afedbg",
+	"gefdba ea gcdbea adgef abef efcbgd gae egdbf cdgfa cdagbfe | gea feba abfe afbe",
+	"bcfag eafdbcg feagc defbgc bdgeaf gbc gbacfd adcb dgfab cb | bc dfagb ceabgfd bacd",
+	"cadgfe gefbd bg cdfge ebfdgc bgdafce gdb cgfb fedab gcdeab | bg dgb bedaf dbgfcae",
+	"afcdb dcbg eacdf agbfec gbacf bd fdb dcbgeaf befdga gabfcd | bcgaf cbfaeg cfdab bcfad",
+	"cebfdag cgafe cdfbe abfec fegabc fdaecg ab eab aegcdb fbag | egcaf eba gbaedc dbgfcea",
+	"cbdge gcbdea bdg cbaed defcg ebag gbcdeaf agbdfc bg ecafbd | ageb aebg gb fecbad",
+	"dgc gbcad bdafgce cedagf dfbg abcefd dg abgcfd abceg afcdb | gfdb eagbc efdbac dgc",
+	"fgdab egdbcaf dbagfc efbadg ge egcdfb cabfe fbage gead geb | gbe adcfgbe ebg beg",
+	"bgfd cbafegd dcabe gfcba dagefc gda ecfabg dg bcadfg bcgad | caebd cdgba acgdef gfecbda",
+};
 
-constexpr int g_dataTest[] = {16, 1, 2, 0, 4, 2, 7, 1, 2, 14};
+constexpr const char *g_dataTest[] = {
+	"be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe", "edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc",
+	"fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg",		  "fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb",
+	"aecbfdg fbg gf bafeg dbefa fcge gcbea fcaegb dgceab fcbdga | gecf egdcabf bgf bfgea",	  "fgeab ca afcebg bdacfeg cfaedg gcfdb baec bfadeg bafgc acf | gebdcfa ecba ca fadegcb",
+	"dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbcadfe",	  "bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef",
+	"egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb",		  "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce",
+};
 
-static int64_t Task1(const int data[], size_t length)
+static int64_t Task1(const char *const data[], size_t length)
 {
-	int		minFuelPos		= -1;
-	int64_t minFuelQuantity = std::numeric_limits<int64_t>::max();
+	uint64_t digitCount[10] = {};
 
-	int min = data[0], max = data[0];
-	for (size_t i = 1; i < length; i++)
+	for (size_t i = 0; i < length; i++)
 	{
-		min = std::min(data[i], min);
-		max = std::max(data[i], max);
-	}
+		uint8_t inputs[10]	 = {};
+		uint8_t inputLen[10] = {};
+		uint8_t outputs[4]	 = {};
+		uint8_t outputLen[4] = {};
 
-	for (int pos = min; pos <= max; pos++)
-	{
-		int64_t fuel = 0;
-
-		for (size_t i = 0; i < length; i++)
+		// Parse input
+		const char *c	  = data[i];
+		int			index = 0;
+		while (*c)
 		{
-			fuel += std::abs(data[i] - pos);
+			switch (*c)
+			{
+				case ' ':
+					index++;
+					break;
+
+				case 'a':
+				case 'b':
+				case 'c':
+				case 'd':
+				case 'e':
+				case 'f':
+				case 'g':
+					if (index < 10)
+					{
+						inputs[index] |= 1 << (*c - 'a');
+						inputLen[index]++;
+					}
+					else
+					{
+						int outputIndex = index - 11;
+						assert(outputIndex >= 0 && outputIndex < 4);
+						outputs[outputIndex] |= 1 << (*c - 'a');
+						outputLen[outputIndex]++;
+					}
+					break;
+			}
+
+			c++;
 		}
 
-		if (fuel < minFuelQuantity)
+		for (int j = 0; j < 4; j++)
 		{
-			minFuelPos		= pos;
-			minFuelQuantity = fuel;
+			switch (outputLen[j])
+			{
+				case 2:
+					digitCount[1]++;
+					break;
+				case 3:
+					digitCount[7]++;
+					break;
+				case 4:
+					digitCount[4]++;
+					break;
+				case 7:
+					digitCount[8]++;
+					break;
+			}
 		}
 	}
 
-	return minFuelQuantity;
+	return digitCount[1] + digitCount[4] + digitCount[7] + digitCount[8];
 }
 
-static int64_t Task2(const int data[], size_t length)
+static int64_t Task2(const char *const data[], size_t length)
 {
-	int		minFuelPos		= -1;
-	int64_t minFuelQuantity = std::numeric_limits<int64_t>::max();
+	uint64_t result = 0;
 
-	int min = data[0], max = data[0];
-	for (size_t i = 1; i < length; i++)
+	for (size_t i = 0; i < length; i++)
 	{
-		min = std::min(data[i], min);
-		max = std::max(data[i], max);
-	}
+		uint8_t inputs[10]	 = {};
+		uint8_t inputLen[10] = {};
+		uint8_t outputs[4]	 = {};
+		uint8_t outputLen[4] = {};
 
-	for (int pos = min; pos <= max; pos++)
-	{
-		int64_t fuel = 0;
-
-		for (size_t i = 0; i < length; i++)
+		// Parse input
+		const char *c	  = data[i];
+		int			index = 0;
+		while (*c)
 		{
-			int d = std::abs(data[i] - pos);
-			// https://oeis.org/A000217
-			fuel += ((d + 1) * (d + 1) * (d + 1) - (d * d * d)) / 6;
+			switch (*c)
+			{
+				case ' ':
+					index++;
+					break;
+
+				case 'a':
+				case 'b':
+				case 'c':
+				case 'd':
+				case 'e':
+				case 'f':
+				case 'g':
+					if (index < 10)
+					{
+						inputs[index] |= 1 << (*c - 'a');
+						inputLen[index]++;
+					}
+					else
+					{
+						int outputIndex = index - 11;
+						assert(outputIndex >= 0 && outputIndex < 4);
+						outputs[outputIndex] |= 1 << (*c - 'a');
+						outputLen[outputIndex]++;
+					}
+					break;
+			}
+
+			c++;
 		}
 
-		if (fuel < minFuelQuantity)
+		// Digits 5, 2, and 3 all activate wires a, d and g
+		uint8_t combined523 = 0x7f;
+		// Digits 9, 6, and 0 all activate wires a, b, d, f, and g
+		uint8_t combined960 = 0x7f;
+		// Record the wires that are set for each digit with a known number of wires set
+		uint8_t wires1, wires7, wires4;
+		for (int j = 0; j < 10; j++)
 		{
-			minFuelPos		= pos;
-			minFuelQuantity = fuel;
+			switch (inputLen[j])
+			{
+				case 2:
+					// 2 inputs, means this is a 1, which is wires c and f (2 and 6)
+					wires1 = inputs[j];
+					break;
+				case 3:
+					// 3 inputs, means this is a 7, which is wires a, c and f (0, 2 and 6)
+					wires7 = inputs[j];
+					break;
+				case 4:
+					// 4 inputs, means this is a 4, which is wires b, c, d and f (1, 2, 3 and 6)
+					wires4 = inputs[j];
+					break;
+				case 5:
+					// 5 inputs, means this is a 5, 2, or 3 which cover all of the wires combined
+					combined523 &= inputs[j];
+					break;
+				case 6:
+					// 6 inputs, means this is a 9, 6, or 0 which cover all of the wires combined
+					combined960 &= inputs[j];
+					break;
+				case 7:
+					// 7 inputs, means this is an 8, which is all wires, which doesn't really help decode anything
+					break;
+			}
 		}
+
+		uint8_t segmentMapping[7] = {0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f};
+
+		// The a wire (0) is the only one that differs between 1 and 7
+		uint8_t aWire	  = wires7 ^ wires1;
+		segmentMapping[0] = aWire;
+		segmentMapping[1] &= ~aWire;
+		segmentMapping[2] &= ~aWire;
+		segmentMapping[3] &= ~aWire;
+		segmentMapping[4] &= ~aWire;
+		segmentMapping[5] &= ~aWire;
+		segmentMapping[6] &= ~aWire;
+
+		// The f wire is set in the combined (9, 6, 0) and 1, and no other wire is set by all of them
+		uint8_t fWire = combined960 & wires1;
+		segmentMapping[1] &= ~fWire;
+		segmentMapping[2] &= ~fWire;
+		segmentMapping[3] &= ~fWire;
+		segmentMapping[4] &= ~fWire;
+		segmentMapping[5] = fWire;
+		segmentMapping[6] &= ~fWire;
+
+		// The digit 1 contains just the c and f wires, so we can now find the c wire mapping
+		uint8_t cWire = fWire ^ wires1;
+		segmentMapping[1] &= ~cWire;
+		segmentMapping[2] = cWire;
+		segmentMapping[3] &= ~cWire;
+		segmentMapping[4] &= ~cWire;
+		segmentMapping[6] &= ~cWire;
+
+		// Find the b and d wire bits based on the wires in the digit 4, and not in the digit 1
+		uint8_t bdWires	  = wires4 & ~wires1;
+		// Extract just the b wire - the combined (9, 6, 0) doesn't have the d wire set
+		uint8_t bWire	  = combined960 & (bdWires);
+		segmentMapping[1] = bWire;
+		segmentMapping[3] &= ~bWire;
+		segmentMapping[4] &= ~bWire;
+		segmentMapping[6] &= ~bWire;
+
+		// Now we can find the d wire in the same way as for f
+		uint8_t dWire	  = bWire ^ bdWires;
+		segmentMapping[3] = dWire;
+		segmentMapping[4] &= ~dWire;
+		segmentMapping[6] &= ~dWire;
+
+		// wires e and g remain. (5, 2, 3) has g and not e, so and with that
+		segmentMapping[6] &= combined523;
+		segmentMapping[4] &= ~combined523;
+
+		// At this point, every entry in the segment map should be a power of two, representing the wire for each segment of the display
+		// e.g. segmentMapping[0] is the wire that corresponds to a, [1] is b, etc.
+
+		int answerDigits[4] = {-1, -1, -1, -1};
+
+		for (int j = 0; j < 4; j++)
+		{
+			// Evcerything except wire d set means this is a zero
+			if (outputs[j] == (0x7f ^ segmentMapping[3]))
+			{
+				answerDigits[j] = 0;
+			}
+			// Only wires c and f set means this is a 1
+			else if (outputs[j] == (segmentMapping[2] | segmentMapping[5]))
+			{
+				answerDigits[j] = 1;
+			}
+			else if (outputs[j] == (0x7f ^ (segmentMapping[1] | segmentMapping[5])))
+			{
+				answerDigits[j] = 2;
+			}
+			else if (outputs[j] == (0x7f ^ (segmentMapping[1] | segmentMapping[4])))
+			{
+				answerDigits[j] = 3;
+			}
+			else if (outputs[j] == (segmentMapping[1] | segmentMapping[2] | segmentMapping[3] | segmentMapping[5]))
+			{
+				answerDigits[j] = 4;
+			}
+			else if (outputs[j] == (0x7f ^ (segmentMapping[2] | segmentMapping[4])))
+			{
+				answerDigits[j] = 5;
+			}
+			else if (outputs[j] == (0x7f ^ segmentMapping[2]))
+			{
+				answerDigits[j] = 6;
+			}
+			else if (outputs[j] == (segmentMapping[0] | segmentMapping[2] | segmentMapping[5]))
+			{
+				answerDigits[j] = 7;
+			}
+			else if (outputs[j] == 0x7f)
+			{
+				answerDigits[j] = 8;
+			}
+			else if (outputs[j] == (0x7f ^ segmentMapping[4]))
+			{
+				answerDigits[j] = 9;
+			}
+			else
+			{
+				// Unrecognised digit.
+				assert(0);
+			}
+		}
+
+		result += answerDigits[0] * 1000 + answerDigits[1] * 100 + answerDigits[2] * 10 + answerDigits[3];
 	}
 
-	return minFuelQuantity;
+	return result;
 }
 
 void Day8()
 {
 	constexpr const char *resultName = " day 8 result is ";
 
-	//std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
+	// std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
 
-	//std::cout << "From task1, " << resultName << Task1(g_data1, std::size(g_data1)) << "\n";
+	std::cout << "From task1, " << resultName << Task1(g_data1, std::size(g_data1)) << "\n";
 
-	//std::cout << "From test2, " << resultName << Task2(g_dataTest, std::size(g_dataTest)) << "\n";
+	// std::cout << "From test2, " << resultName << Task2(g_dataTest, std::size(g_dataTest)) << "\n";
 
-	//std::cout << "From task2, " << resultName << Task2(g_data1, std::size(g_data1)) << "\n";
+	std::cout << "From task2, " << resultName << Task2(g_data1, std::size(g_data1)) << "\n";
 }
