@@ -481,7 +481,7 @@ static int64_t Task2(const char *const data[], size_t length)
 
 void Day8()
 {
-	constexpr const char *resultName = " day 8 result is ";
+	constexpr const char *resultName = " output sum is ";
 
 	// std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
 
