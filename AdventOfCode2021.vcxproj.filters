@@ -45,10 +45,18 @@
     <ClCompile Include="day9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="day10.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Day1.txt">
       <Filter>Source Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-format">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
