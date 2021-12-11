@@ -297,11 +297,11 @@ void Day10()
 {
 	constexpr const char *resultName = " day 10 result is ";
 
-	std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
+	//std::cout << "From test1, " << resultName << Task1(g_dataTest, std::size(g_dataTest)) << "\n";
 
 	std::cout << "From task1, " << resultName << Task1(g_data1, std::size(g_data1)) << "\n";
 
-	std::cout << "From test2, " << resultName << Task2(g_dataTest, std::size(g_dataTest)) << "\n";
+	//std::cout << "From test2, " << resultName << Task2(g_dataTest, std::size(g_dataTest)) << "\n";
 
 	std::cout << "From task2, " << resultName << Task2(g_data1, std::size(g_data1)) << "\n";
 }
