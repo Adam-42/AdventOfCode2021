@@ -277,7 +277,7 @@ static int64_t Task2(const char *const data[], size_t length, int steps)
 	}
 
 	// We need to divide by two because each letter is counted in two letter pairs
-	// (eccept the first and last letter in the string, which we handled earlier)
+	// (except the first and last letter in the string, which we handled earlier)
 	return (maxFrequency - minFrequency) / 2;
 }
 
